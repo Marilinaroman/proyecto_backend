@@ -1,0 +1,11 @@
+<div class="d-flex column">
+    {{#each producto}}
+        <img class="rounded" src={{this.url}} alt={{this.producto}}>
+        <div >
+            <h1>{{this.producto}}</h1>
+            <p>${{this.precio}}</p>
+            <input type="number">
+            <button class="btn btn-primary">Agregar al carrito</button>
+        </div>
+    {{/each}}
+</div>
