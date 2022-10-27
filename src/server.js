@@ -1,7 +1,7 @@
 const express = require('express')
+const handlebars = require('express-handlebars')
 const { Server: HttpServer } = require("http");
 const { Server: Socket } = require("socket.io");
-const handlebars = require('express-handlebars')
 
 //exporto rutas
 const rutaCarrito = require('./router/rutaCarrito.js')
@@ -32,12 +32,11 @@ app.set('views','./views')
 app.set('view engine','handlebars')
 
 
-
 //defino rutas
-app.use('/', rutaProductos)
-app.use('/carrito', rutaCarrito)
+app.use('/api/productos', rutaProductos)
+app.use('/api/carrito', rutaCarrito)
 
 io.on('connection',(socket)=>{
     console.log(socket.id);
-
 })
+

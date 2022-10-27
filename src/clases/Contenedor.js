@@ -1,6 +1,6 @@
 const fs = require('fs')
 
-class ProductosContenedor {
+class Contenedor {
     constructor (data){
         this.data = data
         this.object = this.readData(this.data)  || [];
@@ -44,6 +44,21 @@ class ProductosContenedor {
         }
     }
 
+    async newId(){
+        try{
+            const data = await this.getAll()
+            const newId = await data.at(-1)
+            const newData = {id:(newId["id"] + 1)}
+            data.push(newData)
+            this.reWriteData(data)
+            
+            return newData
+        }catch(err){
+            console.log(err);
+        }
+    }
+
+
     async save(obj){
         try{
             const data = await this.getAll()
@@ -82,4 +97,4 @@ class ProductosContenedor {
     }
 }
 
-module.exports = ProductosContenedor
+module.exports = Contenedor

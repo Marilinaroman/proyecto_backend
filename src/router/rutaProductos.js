@@ -1,12 +1,12 @@
 const express = require('express')
 const rutaProductos = express.Router()
 
-const ProductosContenedor = require('../clases/ProductosContenedor.js')
+const Contenedor = require('../clases/Contenedor.js')
 
-const data = new ProductosContenedor('./data/productos.txt')
+const data = new Contenedor('./data/productos.txt')
 
 // verificacion de rol
-let rol = 'cliente'
+let rol = 'admin'
 
 const verificaRol = (req,res,next) =>{
     if(rol === 'admin'){
@@ -35,16 +35,46 @@ rutaProductos.get('/:id', async (req,res)=>{
     }
 })
 
-rutaProductos.post('/',verificaRol,(req,res)=>{
-    res.render('admin')
+rutaProductos.post('/',verificaRol, async (req,res)=>{
+    
+    const newProd = (req.body)
+    await data.save(newProd)
+
+    if(rol === 'admin'){
+        res.send(data)
+    }else{
+        return res.json({
+            message:"no tienes acceso a esta ruta"
+        })
+    }
 })
 
 rutaProductos.put('/:id',verificaRol, async(req,res) =>{
     const {id} = req.params
     const modificacion = req.body
     
-    const prod = await productos.putById(Number(id),modificacion)
-    res.render('admin')
+    if(rol === 'admin'){
+        
+        const prod = await data.putById(Number(id),modificacion)
+        res.send(prod)
+    }else{
+        return res.json({
+            message:"no tienes acceso a esta ruta"
+        })
+    }
+})
+
+rutaProductos.delete('/:id',verificaRol, async(req,res)=>{
+    const {id} = req.params
+
+    if(rol ==='admin'){
+        const prod = data.deleteById(id)
+        res.send(prod)
+    }else{
+        return res.json({
+            message:'no tienes acceso a esta ruta'
+        })
+    }
 })
 
 

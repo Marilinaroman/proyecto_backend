@@ -1,3 +1,23 @@
 <div>
     <h2>mi carrito</h2>
+    {{#if carrito}}
+    <table class="table table-striped-columns">
+        <thead>
+        <tr>
+            <th>Nombre</th>
+            <th>Precio</th>
+            <th>URL</th>
+        </tr>
+        </thead>
+        <tbody id="detalleProducto">
+            {{#each carrito}}
+                <tr>
+                    <td>{{pedido.producto}}</td>
+                    <td>{{pedido.precio}}</td>
+                    <td><img src="{{pedido.url}}" alt="{{pedido.producto}}"> </td>
+                </tr>
+            {{/each}}
+        </tbody>
+    </table>
+    {{/if}}
 </div>
