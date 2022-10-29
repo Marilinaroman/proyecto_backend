@@ -28,9 +28,14 @@ rutaCarrito.delete('/:id', async(req,res)=>{
 rutaCarrito.post('/:id/productos', async(req,res)=>{
     const {id} = req.params
     const modificacion = req.body
-    const idModificacion = modificacion.id
-    //console.log(id,modificacion, idModificacion);
-    const carrito = await data.moreProd(id, modificacion,idModificacion)
+    const carrito = await data.moreProd(id, modificacion)
+    res.send(carrito)
+})
+
+//Elimina un producto del carrito
+rutaCarrito.delete('/:id/productos/:id_prod', async(req,res)=>{
+    const {id, id_prod} = req.params
+    const carrito = await data.deleteOneProd(id, id_prod)
     res.send(carrito)
 })
 module.exports= rutaCarrito

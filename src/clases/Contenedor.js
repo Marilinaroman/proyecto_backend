@@ -9,7 +9,7 @@ class Contenedor {
     async getById(id){
         try {
             this.object = await this.getAll()
-            const obj = this.object.filter((e)=> e.id === Number(id))
+            const obj = this.object.find((e)=> e.id === Number(id))
             return obj? obj : null
         } catch(err){
             console.log(err);
@@ -87,16 +87,28 @@ class Contenedor {
             console.log(error)
         }
     }
-    async moreProd(id, body, idProduct){
+    async moreProd(id, body){
         try {
-            const data = await this.getAll()
             const cart = await this.getById(id)
-            console.log(cart);
             cart.productos.push(body)
-            await fs.promises.writeFile(this.data, JSON.stringify(data, null, 2))
+            this.putById(id,cart)
             return 'producto agregado'
         } catch (error) {
             console.log(error)
+        }
+    }
+
+    async deleteOneProd(id, id_prod){
+        try{
+            const cart = await this.getById(id)
+            const cartModi = cart.productos.filter((e)=>e.id !== Number(id_prod))
+            cart.productos = []
+            cart.productos.push(cartModi)
+            this.putById(id,cart)
+            return 'producto eliminado'
+
+        }catch(err){
+            console.log(err);
         }
     }
     
