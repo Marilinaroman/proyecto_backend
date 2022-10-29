@@ -18,7 +18,8 @@ const verificaRol = (req,res,next) =>{
 
 rutaProductos.get('/', async(req,res)=>{
     const listado = await data.getAll()
-    res.render('products',{productos:listado})
+    if (!listado) return res.status(404).send({ message: 'Error' });
+    res.send(listado)
 })
 
 //muestra el producto segun su id
@@ -54,9 +55,14 @@ rutaProductos.put('/:id',verificaRol, async(req,res) =>{
     const modificacion = req.body
     
     if(rol === 'admin'){
+        const existe = await data.getById(id)
         
-        const prod = await data.putById(Number(id),modificacion)
-        res.send(prod)
+        if (!existe){
+            return res.status(404).send({ message: 'Error el producto no existe' })
+        } else{
+            const prod = await data.putById(Number(id),modificacion)
+            return res.send(prod)
+        }
     }else{
         return res.json({
             message:"no tienes acceso a esta ruta"
@@ -68,8 +74,14 @@ rutaProductos.delete('/:id',verificaRol, async(req,res)=>{
     const {id} = req.params
 
     if(rol ==='admin'){
-        const prod = data.deleteById(id)
+        const existe = await data.getById(id)
+        
+        if (!existe){
+            return res.status(404).send({ message: 'Error el producto no existe' })
+        } else{
+            const prod = data.deleteById(id)
         res.send(prod)
+        }
     }else{
         return res.json({
             message:'no tienes acceso a esta ruta'
