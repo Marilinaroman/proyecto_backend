@@ -48,7 +48,7 @@ class Contenedor {
         try{
             const data = await this.getAll()
             const newId = await data.at(-1)
-            const newData = {id:(newId["id"] + 1)}
+            const newData = {id:(newId["id"] + 1), productos:[], timestamp: Date.now()}
             data.push(newData)
             this.reWriteData(data)
             
@@ -76,13 +76,25 @@ class Contenedor {
     async putById(id, body){
         try {
             const data = await this.getAll();
-            const prod = data.findIndex(elm=>elm.id === id);
+            const prod = data.findIndex(elm=>elm.id === Number(id));
             data[prod] = {
                 id:id,
                 ...body
             };
             await fs.promises.writeFile(this.data, JSON.stringify(data, null, 2))
             return data;
+        } catch (error) {
+            console.log(error)
+        }
+    }
+    async moreProd(id, body, idProduct){
+        try {
+            const data = await this.getAll()
+            const cart = await this.getById(id)
+            console.log(cart);
+            cart.productos.push(body)
+            await fs.promises.writeFile(this.data, JSON.stringify(data, null, 2))
+            return 'producto agregado'
         } catch (error) {
             console.log(error)
         }
