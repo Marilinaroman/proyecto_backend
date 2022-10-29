@@ -1,6 +1,6 @@
 [
   {
-    "timestamp": "",
+    "timestamp": "12313131233",
     "stock": 12,
     "nombre": "pollera",
     "precio": 1000,
@@ -8,7 +8,7 @@
     "id": 1
   },
   {
-    "timestamp": "",
+    "timestamp": "213132123",
     "stock": 12,
     "nombre": "vestido",
     "precio": 1000,
@@ -16,7 +16,7 @@
     "id": 2
   },
   {
-    "timestamp": "",
+    "timestamp": "21312313",
     "stock": 12,
     "nombre": "saco",
     "precio": 1000,
@@ -24,7 +24,7 @@
     "id": 3
   },
   {
-    "timestamp": "",
+    "timestamp": "12313123",
     "stock": 12,
     "nombre": "pantalon",
     "precio": 1000,
@@ -32,7 +32,7 @@
     "id": 4
   },
   {
-    "timestamp": "",
+    "timestamp": "12313132",
     "stock": 12,
     "nombre": "buzo",
     "precio": 2000,
@@ -40,11 +40,19 @@
     "id": 5
   },
   {
-    "timestamp": "",
+    "timestamp": "23121223",
     "stock": 12,
     "nombre": "camisa",
     "precio": 20,
     "url": "https://media.istockphoto.com/photos/gorgeous-female-brunette-model-in-white-clothes-picture-id1148523276?k=20&m=1148523276&s=612x612&w=0&h=hqW4EVfX20vewtegJ0-BJOeWuvtkY_K6hhlzCU3hYSE=",
     "id": 6
+  },
+  {
+    "timestamp": 1667076762921,
+    "stock": 12,
+    "nombre": "camison",
+    "precio": 20,
+    "url": "https://media.istockphoto.com/photos/gorgeous-female-brunette-model-in-white-clothes-picture-id1148523276?k=20&m=1148523276&s=612x612&w=0&h=hqW4EVfX20vewtegJ0-BJOeWuvtkY_K6hhlzCU3hYSE=",
+    "id": 7
   }
 ]

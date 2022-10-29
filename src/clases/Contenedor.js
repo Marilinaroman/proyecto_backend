@@ -63,7 +63,7 @@ class Contenedor {
         try{
             const data = await this.getAll()
             const newId = data.at(-1)
-            const newData = {...obj, id:(newId["id"] + 1)}
+            const newData = {...obj, id:(newId["id"] + 1), timestamp: Date.now()}
             data.push(newData)
             this.reWriteData(data)
             return newData["id"]
