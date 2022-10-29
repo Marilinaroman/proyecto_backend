@@ -24,10 +24,10 @@ rutaProductos.get('/', async(req,res)=>{
 //muestra el producto segun su id
 rutaProductos.get('/:id', async (req,res)=>{
     const {id} =req.params
-    const prod = await data.getById(Number(id))
+    const prod = await data.getById(id)
 
     if(prod){
-        res.render('prod',{producto:prod})
+        res.send(prod)
     }else{
         return res.json({
             message:"el producto no existe"
