@@ -46,13 +46,5 @@
     "precio": 20,
     "url": "https://media.istockphoto.com/photos/gorgeous-female-brunette-model-in-white-clothes-picture-id1148523276?k=20&m=1148523276&s=612x612&w=0&h=hqW4EVfX20vewtegJ0-BJOeWuvtkY_K6hhlzCU3hYSE=",
     "id": 6
-  },
-  {
-    "timestamp": 1667076762921,
-    "stock": 12,
-    "nombre": "camison",
-    "precio": 20,
-    "url": "https://media.istockphoto.com/photos/gorgeous-female-brunette-model-in-white-clothes-picture-id1148523276?k=20&m=1148523276&s=612x612&w=0&h=hqW4EVfX20vewtegJ0-BJOeWuvtkY_K6hhlzCU3hYSE=",
-    "id": 7
   }
 ]

@@ -1,9 +1,14 @@
-const express = require('express')
+import express from "express"
+import {ContainerMongo} from '../clases/ContenedorProductosMongo.js'
+import { ContenedorDaoProductos } from "../daos/index.js"
+
 const rutaProductos = express.Router()
 
-const Contenedor = require('../clases/Contenedor.js')
+//const Contenedor = require('../clases/Contenedor.js')
 
-const data = new Contenedor('./data/productos.txt')
+//const data = new Contenedor('./data/productos.txt')
+
+const data = ContenedorDaoProductos
 
 // verificacion de rol
 let rol = 'admin'
@@ -25,8 +30,9 @@ rutaProductos.get('/', async(req,res)=>{
 //muestra el producto segun su id
 rutaProductos.get('/:id', async (req,res)=>{
     const {id} =req.params
+    console.log(id);
     const prod = await data.getById(id)
-
+    console.log(prod);
     if(prod){
         res.send(prod)
     }else{
@@ -60,7 +66,7 @@ rutaProductos.put('/:id',verificaRol, async(req,res) =>{
         if (!existe){
             return res.status(404).send({ message: 'Error el producto no existe' })
         } else{
-            const prod = await data.putById(Number(id),modificacion)
+            const prod = await data.putById(id,modificacion)
             return res.send(prod)
         }
     }else{
@@ -80,7 +86,7 @@ rutaProductos.delete('/:id',verificaRol, async(req,res)=>{
             return res.status(404).send({ message: 'Error el producto no existe' })
         } else{
             const prod = data.deleteById(id)
-        res.send(prod)
+            res.send(prod)
         }
     }else{
         return res.json({
@@ -90,4 +96,4 @@ rutaProductos.delete('/:id',verificaRol, async(req,res)=>{
 })
 
 
-module.exports = rutaProductos
+export default rutaProductos
