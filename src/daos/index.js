@@ -3,8 +3,9 @@ import admin from "firebase-admin";
 import {options} from '../config/configSql.js';
 
 let ContenedorDaoProductos
+let ContenedorDaoCarrito
 
-let databaseType = 'firebase'
+let databaseType = 'mongo'
 
 switch(databaseType){
     case "mongo":
@@ -23,20 +24,29 @@ switch(databaseType){
         const {productosSchema} = await import('../models/mongoAtlas.js')
         const {productosCollection} = await import('../models/mongoAtlas.js')
         ContenedorDaoProductos = new ProductosDaosMongo(productosCollection,productosSchema)
+
+        const {CarritoDaosMongo} = await import('./carritos/carritoMongo.js')
+        const {carritosSchema} = await import('../models/mongoAtlas.js')
+        const {carritosCollection} = await import('../models/mongoAtlas.js')
+        ContenedorDaoCarrito = new CarritoDaosMongo(carritosCollection,carritosSchema)
         break;
 
     case "mariaDb":
+        const {CarritoDaosMariaDb} = await import('./carritos/carritoMariaDb.js')
         const {ProductosDaosMariaDb} =await import('./productos/productosMariaDb.js')
         ContenedorDaoProductos = new ProductosDaosMariaDb(options.mariaDb,'productos')
+        ContenedorDaoCarrito = new CarritoDaosMariaDb(options.mariaDb,'carritos')
         break;
 
     case "archivo":
         const {ProductosDaosArchivo} = await import('./productos/productosArchivo.js')
         ContenedorDaoProductos = new ProductosDaosArchivo(options.fileSystem.pathProductos)
+        const {CarritoDaosArchivo} = await import('./carritos/carritoArchivo.js')
+        ContenedorDaoCarrito = new CarritoDaosArchivo(options.fileSystem.pathPedidos)
         break;
     case "firebase":
         const {ProductosDaosFirebase} = await import('./productos/productosFirebase.js')
         ContenedorDaoProductos = new ProductosDaosFirebase()
 }
 
-export {ContenedorDaoProductos}
+export {ContenedorDaoProductos, ContenedorDaoCarrito}

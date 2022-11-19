@@ -27,6 +27,21 @@ const createTable = async()=>{
         console.log('tabla creada exitosamente');
         dbmariaDb.destroy()
 
+        //tabla carrito
+        const carritoExiste = await dbmariaDb.schema.hasTable('carrito')
+
+        if(carritoExiste){
+            await dbmariaDb.schema.dropTable('carrito')
+        }
+
+        await dbmariaDb.schema.createTable('carrito', table=>{
+            table.increments("id");
+            table.integer('timestamp',20).nullable(false);
+            table.json_array('productos',20).nullable(false);
+        })
+        console.log('tabla creada exitosamente');
+        dbmariaDb.destroy()
+
 
     } catch(err){
         console.log(err);

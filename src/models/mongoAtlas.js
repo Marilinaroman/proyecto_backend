@@ -1,7 +1,7 @@
 import mongoose, { mongo } from 'mongoose'
 
 const productosCollection = "productos"
-const carritosCollection = 'carritos'
+const carritosCollection = "carritos"
 
 const productosSchema = new mongoose.Schema({
     nombre:String,
@@ -22,5 +22,4 @@ const carritosSchema = new mongoose.Schema({
     }]
 })
 
-export {productosSchema,productosCollection}
-export const carritoModel = mongoose.model(carritosCollection,carritosSchema)
+export {productosSchema,productosCollection,carritosSchema,carritosCollection}

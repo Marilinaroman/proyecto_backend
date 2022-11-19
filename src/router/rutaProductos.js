@@ -4,10 +4,6 @@ import { ContenedorDaoProductos } from "../daos/index.js"
 
 const rutaProductos = express.Router()
 
-//const Contenedor = require('../clases/Contenedor.js')
-
-//const data = new Contenedor('./data/productos.txt')
-
 const data = ContenedorDaoProductos
 
 // verificacion de rol

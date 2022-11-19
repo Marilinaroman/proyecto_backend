@@ -1,5 +1,5 @@
 import express from "express";
-//import rutaCarrito from "./router/rutaCarrito.js"
+import rutaCarrito from "./router/rutaCarrito.js"
 import rutaProductos from "./router/rutaProductos.js";
 
 const app = express()
@@ -10,6 +10,6 @@ app.use(express.json())
 app.use(express.urlencoded({extended:true}))
 
 app.use('/api/productos', rutaProductos)
-//app.use('/api/carrito',rutaCarrito)
+app.use('/api/carrito',rutaCarrito)
 
 app.listen(PORT, ()=>console.log(`server ${PORT}`))

@@ -1,8 +1,8 @@
-const express = require('express')
+import express from 'express'
+import { ContenedorDaoCarrito } from '../daos/index.js'
 const rutaCarrito = express.Router()
 
-const Contenedor = require('../clases/Contenedor.js')
-const data = new Contenedor('./data/pedidos.txt')
+const data = ContenedorDaoCarrito
 
 //Lista todos los productos del carrito
 rutaCarrito.get('/:id/productos',async (req,res)=>{
@@ -65,4 +65,5 @@ rutaCarrito.delete('/:id/productos/:id_prod', async(req,res)=>{
         res.send(carrito)
     }
 })
-module.exports= rutaCarrito
+
+export default rutaCarrito
