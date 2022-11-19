@@ -1,9 +1,10 @@
 import mongoose from 'mongoose';
+import admin from "firebase-admin";
 import {options} from '../config/configSql.js';
 
 let ContenedorDaoProductos
 
-let databaseType = 'archivo'
+let databaseType = 'firebase'
 
 switch(databaseType){
     case "mongo":
@@ -33,6 +34,9 @@ switch(databaseType){
         const {ProductosDaosArchivo} = await import('./productos/productosArchivo.js')
         ContenedorDaoProductos = new ProductosDaosArchivo(options.fileSystem.pathProductos)
         break;
+    case "firebase":
+        const {ProductosDaosFirebase} = await import('./productos/productosFirebase.js')
+        ContenedorDaoProductos = new ProductosDaosFirebase()
 }
 
 export {ContenedorDaoProductos}

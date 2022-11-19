@@ -1,8 +1,10 @@
 import path from 'path';
 import {fileURLToPath} from 'url';
 
+
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
+
 
 export const options = {
     fileSystem:{
@@ -17,8 +19,5 @@ export const options = {
             password:'',
             database:'ecommerce'
         }
-    },
-    firebase:{
-        
     }
 }
