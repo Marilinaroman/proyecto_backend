@@ -43,7 +43,8 @@ class ContainerCarritoMongo {
 
     async moreProd(id,modificacion){
         try{
-            return this.putById(id,modificacion)
+            const data = await this.model.findByIdAndUpdate(id, modificacion)
+            return data
         }catch(err){
             console.log(err);
         }
@@ -60,14 +61,16 @@ class ContainerCarritoMongo {
     }
     async deleteOneProd(id,id_prod){
         try{
-            const data = await this.model.findOneAndUpdate(
-                {'_id':id},
-                {$pull: {subdocumentsArray:{'_id':id_prod}}},
-                {new:true},
-                function(err) {
-                    if (err) { console.log(err) }
+            const data = await this.model.findByIdAndUpdate({
+                "_id": id
+                },
+                {
+                    "$pull": {
+                    "productos": {
+                        "_id": id_prod
+                    }
+                    }
                 })
-            return data
         }catch(err){
             console.log(err);
         }

@@ -58,12 +58,30 @@ class ContendorCarritoMariaDb{
         }
         
     }
+    async newId(){
+        try{
+            const newTime = Date.now()
+            const data = {timestamp:newTime}
+            const [id] = await this.database(this.table).insert(data)
+            return console.log(`carrito agregado ${id}`)
+        }catch(err){
+            console.log(err);
+        }
+    }
 
+    async moreProd(id,modificacion){
+        try{
+            await this.putById(id,modificacion)
+            return console.log(`carrito actualizado ${id}`)
+        }catch(err){
+            console.log(err);
+        }
+    }
     async putById(id, body){
         try{
             await this.database.from(this.table).where('id',id).update({
                 timestamp: body.timestamp,
-                stock: body.stock,
+                cantidad: body.cantidad,
                 nombre: body.nombre,
                 price: body.price,
                 url: body.url

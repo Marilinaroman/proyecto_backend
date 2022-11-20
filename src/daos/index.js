@@ -5,7 +5,7 @@ import {options} from '../config/configSql.js';
 let ContenedorDaoProductos
 let ContenedorDaoCarrito
 
-let databaseType = 'mongo'
+let databaseType = 'firebase'
 
 switch(databaseType){
     case "mongo":
@@ -35,7 +35,7 @@ switch(databaseType){
         const {CarritoDaosMariaDb} = await import('./carritos/carritoMariaDb.js')
         const {ProductosDaosMariaDb} =await import('./productos/productosMariaDb.js')
         ContenedorDaoProductos = new ProductosDaosMariaDb(options.mariaDb,'productos')
-        ContenedorDaoCarrito = new CarritoDaosMariaDb(options.mariaDb,'carritos')
+        ContenedorDaoCarrito = new CarritoDaosMariaDb(options.mariaDb,'carrito')
         break;
 
     case "archivo":
@@ -46,7 +46,9 @@ switch(databaseType){
         break;
     case "firebase":
         const {ProductosDaosFirebase} = await import('./productos/productosFirebase.js')
+        const {CarritoDaosFirebase} = await import('./carritos/carritoFirebase.js')
         ContenedorDaoProductos = new ProductosDaosFirebase()
+        ContenedorDaoCarrito = new CarritoDaosFirebase()
 }
 
 export {ContenedorDaoProductos, ContenedorDaoCarrito}
