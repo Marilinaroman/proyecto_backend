@@ -30,11 +30,32 @@ class Containerfirebase{
 		}
 	}
 	
-	async getById(id) {
+	async getById(id){
 		try {
-            const doc = this.db.doc(`${id}`)
-            const item = await doc.get()
+            const prod = this.db.doc(id)
+            const item = await getDoc(prod)
             const response = item.data()
+            console.log(response);
+            return response
+		} catch (err) {
+			console.log(err);
+		}
+	}
+    async getByGenero(genero) {
+		try {
+            const data = await this.db.get()
+            const docs = data.docs
+
+            const productosFiltrados = docs.filter((doc)=> genero == doc.data().genero)
+            const response = productosFiltrados.map((doc)=>({
+                id: doc.id,
+                nombre:doc.data().nombre,
+                price:doc.data().price,
+                genero: doc.data().genero,
+                stock:doc.data().stock,
+                timestamp:doc.data().timestamp,
+                url:doc.data().url
+            }))
             return response
 		} catch (err) {
 			console.log(err);
@@ -50,6 +71,7 @@ class Containerfirebase{
                 id: doc.id,
                 nombre:doc.data().nombre,
                 price:doc.data().price,
+                genero: doc.data().genero,
                 stock:doc.data().stock,
                 timestamp:doc.data().timestamp,
                 url:doc.data().url
@@ -62,7 +84,7 @@ class Containerfirebase{
 	
 	async deleteById(id) {
 		try {
-			const doc = this.db.doc(`${id}`)
+			const doc = this.db.doc.id
             const item = await doc.delete()
             const data= this.getAll()
             return data

@@ -20,17 +20,31 @@ const verificaRol = (req,res,next) =>{
 rutaProductos.get('/', async(req,res)=>{
     const listado = await data.getAll()
     if (!listado) return res.status(404).send({ message: 'Error' });
-    res.send(listado)
+    res.send({listado})
 })
 
 //muestra el producto segun su id
-rutaProductos.get('/:id', async (req,res)=>{
-    const {id} =req.params
-    console.log(id);
-    const prod = await data.getById(id)
+rutaProductos.get('/:genero', async (req,res)=>{
+    const {genero} =req.params
+    console.log(genero);
+    const prod = await data.getByGenero(genero)
     console.log(prod);
     if(prod){
         res.send(prod)
+    }else{
+        return res.json({
+            message:"el producto no existe"
+        })
+    }
+})
+
+//muestra el producto segun su id
+rutaProductos.get('/:id', async(req,res)=>{
+    const {id} =req.params
+    console.log(req.params);
+    const prod = await data.getById(id)
+    if(prod){
+        return res.send(prod)
     }else{
         return res.json({
             message:"el producto no existe"
