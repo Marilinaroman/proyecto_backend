@@ -3,6 +3,8 @@ import {BrowserRouter, Routes, Route} from 'react-router-dom'
 import Menu from './componentes/Navbar/Menu';
 import ItemListContainer from './componentes/ItemListContainer/ItemListContainer';
 import ItemDetailContainer from './componentes/ItemDetailContainer/ItemDetailContainer'
+import Login from './componentes/Login/Login';
+import CrearCuenta from './componentes/Login/CrearCuenta';
 
 function App() {
   return (
@@ -11,8 +13,10 @@ function App() {
         <Menu/>
         <Routes>
           <Route path='/api' element={<ItemListContainer/>} />
-          <Route path='/api/productos/:genero' element={<ItemListContainer/>}/>
-          <Route path='/api/productos/:id' element={<ItemDetailContainer/>}/>
+          <Route path='/api/genero/:genero' element={<ItemListContainer/>}/>
+          <Route path='/api/id/:id' element={<ItemDetailContainer/>}/>
+          <Route path='/api/iniciar-sesion' element={<Login/>}/>
+          <Route path='/api/registrarse' element={<CrearCuenta/>}/>
         </Routes>
       </BrowserRouter>
       

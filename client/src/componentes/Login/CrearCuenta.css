@@ -1,0 +1,26 @@
+.CrearCuenta{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0 1rem 0;
+}
+
+.CrearCuenta > input{
+    border-radius: 1rem;
+    width: 15rem;
+    cursor: pointer;
+    height: 1.5rem;
+    text-align: center;
+}
+.CrearCuenta > input:hover{
+    background-color:  rgb(223, 223, 226);
+    
+}
+
+.CrearCuenta > .botones{
+    width: 15rem;
+    margin: 1rem 0 1rem 0;
+    height: 2rem;
+    font-weight: bold;
+}

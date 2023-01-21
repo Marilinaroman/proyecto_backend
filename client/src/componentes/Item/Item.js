@@ -15,7 +15,7 @@ const Item = ({id,nombre, price, stock, url}) =>{
             <Card.Img className='image' variant="top" src={url} />
             <Card.Title className='title'>{nombre}</Card.Title>
             <Card.Text className='price'>${price}</Card.Text>
-            <Link to={`/api/productos/${id}`} className='boton'>Ver mas</Link>
+            <Link to={`/api/id/${id}`} className='boton'>Ver mas</Link>
                     
         </Card>
     )

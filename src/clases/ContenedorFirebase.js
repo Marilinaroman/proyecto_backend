@@ -33,7 +33,7 @@ class Containerfirebase{
 	async getById(id){
 		try {
             const prod = this.db.doc(id)
-            const item = await getDoc(prod)
+            const item = await prod.get()
             const response = item.data()
             console.log(response);
             return response

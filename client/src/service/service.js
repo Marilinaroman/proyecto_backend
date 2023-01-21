@@ -15,7 +15,7 @@ export const getAll = async() =>{
 export const getById = async(id) =>{
     
     let data = await axios({
-        url:`/api/${id}`,
+        url:`/api/id/${id}`,
         method:'get'
     }).then( res =>{
         return res.data
@@ -23,5 +23,18 @@ export const getById = async(id) =>{
     console.log(data);
     return data
 }
+
+export const sendUser = async(username, password) =>{
+    
+    let data = await axios({
+        url:`/api/iniciar-sesion`,
+        method:'post'
+    }).then( res =>{
+        return res.data
+    })
+    console.log(data);
+    return data
+}
+
 
 

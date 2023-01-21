@@ -24,7 +24,7 @@ rutaProductos.get('/', async(req,res)=>{
 })
 
 //muestra el producto segun su id
-rutaProductos.get('/:genero', async (req,res)=>{
+rutaProductos.get('/genero/:genero', async (req,res)=>{
     const {genero} =req.params
     console.log(genero);
     const prod = await data.getByGenero(genero)
@@ -39,7 +39,7 @@ rutaProductos.get('/:genero', async (req,res)=>{
 })
 
 //muestra el producto segun su id
-rutaProductos.get('/:id', async(req,res)=>{
+rutaProductos.get('/id/:id', async(req,res)=>{
     const {id} =req.params
     console.log(req.params);
     const prod = await data.getById(id)

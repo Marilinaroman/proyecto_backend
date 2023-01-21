@@ -1,0 +1,25 @@
+.IniciarSesion{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    margin: 1rem 0 1rem 0;
+}
+
+.IniciarSesion > input{
+    border-radius: 1rem;
+    height: 1.5rem;
+    width: 15rem;
+    text-align: center;
+}
+.IniciarSesion > input:hover{
+    background-color:  rgb(223, 223, 226);
+    
+}
+
+.IniciarSesion > .botones{
+    width: 15rem;
+    margin: 1rem 0 1rem 0;
+    height: 2rem;
+    font-weight: bold;
+}

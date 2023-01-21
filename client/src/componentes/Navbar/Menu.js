@@ -12,8 +12,9 @@ const Menu = ()=>{
             <Navbar.Brand href="/api"> <img src='../img/logo.png' alt='logo' width={155} height={69}/></Navbar.Brand>
             <Nav className="navbar">
                 <Link to='/api'>Inicio</Link>
-                <Link to="/api/mujer">Mujer</Link>
-                <Link to="/api/hombre">Hombre</Link>
+                <Link to="/api/genero/mujer">Mujer</Link>
+                <Link to="/api/genero/hombre">Hombre</Link>
+                <Link to="/api/iniciar-sesion">Ingresar</Link>
             </Nav>
             </Container>
         </Navbar>
