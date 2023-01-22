@@ -5,8 +5,11 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon src/server.js",
-    "create": "nodemon src/scripts/createTable.js"
+    "start-fork": "node src/server.js",
+    "reporte-fork": "artillery quick --count 20 -n 50 http://localhost:8080/api/info?max=100000 > result_fork.txt",
+    "reporte-cluster": "artillery quick --count 20 -n 50 http://localhost:8080/api/info?max=100000 > result_cluster.txt",
+    "start-cluster": "node src/server.js -m CLUSTER",
+    "forever": "forever start src/server.js"
   },
   "keywords": [],
   "author": "",

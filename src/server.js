@@ -16,7 +16,13 @@ import cluster from 'cluster'
 import os from 'os'
 import rutaLogin from "./router/rutaLogin.js";
 import { UserModel } from "./models/users.js";
+import {Server} from 'socket.io';
 
+//Captura argumentos
+const optionsFork ={alias:{m:'mode'}, default:{mode:'FORK'}}
+const objArguments = parseArgs(process.argv.slice(2), optionsFork)
+const MODO = objArguments.mode
+console.log('objArgu', MODO);
 
 //Conecto base de datis
 const mongoUrl = config.MONGO_AUTENTICATION
@@ -30,8 +36,6 @@ mongoose.connect(mongoUrl, {
 })
 
 const app = express()
-
-const PORT = process.env.PORT || 3001
 
 app.use(express.json())
 app.use(express.urlencoded({extended:true}))
@@ -139,4 +143,43 @@ app.use('/api',rutaLogin)
 //Ruta Contacto
 app.use('/api',rutaContacto)
 
-app.listen(PORT, ()=>console.log(`server ${PORT}`))
+// Logica de fork o cluster
+if(MODO==='CLUSTER' && cluster.isPrimary){
+    const numCPUS = os.cpus().length
+
+    for(let i=0; i<numCPUS; i++){
+        cluster.fork()
+    }
+    cluster.on('exit',(worker)=>{
+        console.log(`el subproceso ${worker.process.pid} fallo`);
+        cluster.fork()
+    })
+
+}else{
+    //configuro el puerto
+    const PORT = process.env.PORT|| 3001
+
+    const server = app.listen(PORT,()=>console.log(`server ${PORT}`))
+
+    const io = new Server(server);
+    
+    io.on('connection', async(socket)=>{
+        //console.log('nuevo usuario', socket.id)
+    
+        //io.sockets.emit('productos', productos);
+        io.sockets.emit('chat', await normalizarMsj());
+    
+        socket.broadcast.emit('nuevoUsuario')
+    
+        /*socket.on('nuevoProducto', nuevoProducto=>{
+            productos.push(nuevoProducto)
+            fs.writeFileSync('./archivo.txt', JSON.stringify(productos))
+            io.sockets.emit('lista', productos)
+        })*/
+    
+        socket.on('nuevoMsj', async (nuevoMsj) =>{
+            await mensajes.save(nuevoMsj)
+            io.sockets.emit('chat', await normalizarMsj())
+        })
+    })
+}
