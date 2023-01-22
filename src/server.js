@@ -17,12 +17,13 @@ import os from 'os'
 import rutaLogin from "./router/rutaLogin.js";
 import { UserModel } from "./models/users.js";
 import {Server} from 'socket.io';
+import { logger, logArchivoError, logArchivoWarn } from './logger/logger.js';
 
 //Captura argumentos
 const optionsFork ={alias:{m:'mode'}, default:{mode:'FORK'}}
 const objArguments = parseArgs(process.argv.slice(2), optionsFork)
 const MODO = objArguments.mode
-console.log('objArgu', MODO);
+logger.info('objArgu', MODO);
 
 //Conecto base de datis
 const mongoUrl = config.MONGO_AUTENTICATION
@@ -31,8 +32,8 @@ mongoose.connect(mongoUrl, {
     useNewUrlParser: true,
     useUnifiedTopology:true
 }, (err)=>{
-    if(err) return console.log(`hubo un error: ${err}`);
-    console.log('conexion a base de datos exitosa');
+    if(err) return logArchivoError.error(`hubo un error: ${err}`);
+    logger.info('conexion a base de datos exitosa');
 })
 
 const app = express()
@@ -92,7 +93,7 @@ passport.use('signupStrategy', new LocalStrategy({
     usernameField: "email",
     },
     (req,username,password,done)=>{
-        console.log(username);
+        logger.info(username);
         UserModel.findOne({username:username}, (error,userFound)=>{
             if (error) return done(error,null,{message:'hubo un error'})
             if(userFound) return done(null,null,{message:'el usuario existe'}) 
@@ -105,7 +106,7 @@ passport.use('signupStrategy', new LocalStrategy({
                 username:username,
                 password:createHash(password)
             }
-            console.log(newUser);
+            logger.info(newUser);
             UserModel.create(newUser, (error,userCreated)=>{
                 if(error) return done(error,null, {message:'error al registrar'})
                 return done(null, userCreated,{message:'usuario creado'})
@@ -117,14 +118,14 @@ passport.use('signupStrategy', new LocalStrategy({
 // passport strategy iniciar sesion
 passport.use('loginStrategy', new LocalStrategy(
     (username, password, done) => {
-        console.log(username);
+        logger.info(username);
         UserModel.findOne({ username: username }, (err, user)=> {
             console.log(user);
             if (err) return done(err);
             if (!user) return done(null, false);
             if (!user.password) return done(null, false);
             if (!isValidPassword(user,password)){
-                console.log('existen datos')
+                logger.info('existen datos')
                 return done(null,false,{message:'password invalida'})
             }
             return done(null, user);
@@ -143,6 +144,10 @@ app.use('/api',rutaLogin)
 //Ruta Contacto
 app.use('/api',rutaContacto)
 
+app.get('/*', async(req,res)=>{
+    logArchivoError.error('ruta inexistente')
+})
+
 // Logica de fork o cluster
 if(MODO==='CLUSTER' && cluster.isPrimary){
     const numCPUS = os.cpus().length
@@ -151,7 +156,7 @@ if(MODO==='CLUSTER' && cluster.isPrimary){
         cluster.fork()
     }
     cluster.on('exit',(worker)=>{
-        console.log(`el subproceso ${worker.process.pid} fallo`);
+        logger.info(`el subproceso ${worker.process.pid} fallo`);
         cluster.fork()
     })
 
@@ -159,7 +164,7 @@ if(MODO==='CLUSTER' && cluster.isPrimary){
     //configuro el puerto
     const PORT = process.env.PORT|| 3001
 
-    const server = app.listen(PORT,()=>console.log(`server ${PORT}`))
+    const server = app.listen(PORT,()=>logger.info(`server ${PORT}`))
 
     const io = new Server(server);
     
