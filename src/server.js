@@ -1,6 +1,7 @@
 import express from "express";
 import rutaCarrito from "./router/rutaCarrito.js"
 import rutaProductos from "./router/rutaProductos.js";
+import rutaContacto from "./router/rutaContacto.js";
 import {config} from './config/config.js';
 import mongoose from 'mongoose';
 import { normalize, schema } from "normalizr";
@@ -15,6 +16,7 @@ import cluster from 'cluster'
 import os from 'os'
 import rutaLogin from "./router/rutaLogin.js";
 import { UserModel } from "./models/users.js";
+
 
 //Conecto base de datis
 const mongoUrl = config.MONGO_AUTENTICATION
@@ -92,6 +94,10 @@ passport.use('signupStrategy', new LocalStrategy({
             if(userFound) return done(null,null,{message:'el usuario existe'}) 
             const newUser = {
                 name: req.body.name,
+                address: req.body.address,
+                age: req.body.age,
+                phone: req.body.phone,
+                photo: req.body.photo,
                 username:username,
                 password:createHash(password)
             }
@@ -129,4 +135,8 @@ app.use('/api/carrito',rutaCarrito)
 
 // Rutas del Login
 app.use('/api',rutaLogin)
+
+//Ruta Contacto
+app.use('/api',rutaContacto)
+
 app.listen(PORT, ()=>console.log(`server ${PORT}`))
