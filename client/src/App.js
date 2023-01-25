@@ -15,8 +15,8 @@ function App() {
           <Route path='/api' element={<ItemListContainer/>} />
           <Route path='/api/genero/:genero' element={<ItemListContainer/>}/>
           <Route path='/api/id/:id' element={<ItemDetailContainer/>}/>
-          <Route path='/api/iniciar-sesion' element={<Login/>}/>
-          <Route path='/api/registrarse' element={<CrearCuenta/>}/>
+          <Route path='/api/login' element={<Login/>}/>
+          <Route path='/api/crear-usuario' element={<CrearCuenta/>}/>
         </Routes>
       </BrowserRouter>
       

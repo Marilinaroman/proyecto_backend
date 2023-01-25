@@ -1,7 +1,5 @@
 import {useParams} from 'react-router-dom'
-import { useEffect, useState } from "react";
 import ItemDetail from '../ItemDetail/ItemDetail'
-import axios from 'axios'
 import { getById } from '../../service/service';
 import { useAsync } from '../../hook/useAsync';
 

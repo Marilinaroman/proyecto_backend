@@ -3,7 +3,7 @@ import axios from "axios"
 export const getAll = async() =>{
     
     let data = await axios({
-        url:`/api`,
+        url:`http://localhost:3001/api`,
         method:'get'
     }).then( res =>{
         return res.data.listado
@@ -15,7 +15,7 @@ export const getAll = async() =>{
 export const getById = async(id) =>{
     
     let data = await axios({
-        url:`/api/id/${id}`,
+        url:`http://localhost:3001/api/id/${id}`,
         method:'get'
     }).then( res =>{
         return res.data
@@ -27,7 +27,7 @@ export const getById = async(id) =>{
 export const sendUser = async(username, password) =>{
     
     let data = await axios({
-        url:`/api/iniciar-sesion`,
+        url:`/api/login`,
         method:'post'
     }).then( res =>{
         return res.data

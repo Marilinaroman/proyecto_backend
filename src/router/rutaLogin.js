@@ -16,7 +16,7 @@ rutaLogin.get('/registrarse', async(req,res)=>{
 
 //Crear session
 
-rutaLogin.get('/crear-usuario',passport.authenticate('signupStrategy',{
+rutaLogin.post('/crear-usuario',passport.authenticate('signupStrategy',{
     failureRedirect:'/api/registrarse',
     failureMessage:true
 }),(req,res)=>{

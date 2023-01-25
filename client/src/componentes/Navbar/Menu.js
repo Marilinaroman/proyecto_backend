@@ -14,7 +14,7 @@ const Menu = ()=>{
                 <Link to='/api'>Inicio</Link>
                 <Link to="/api/genero/mujer">Mujer</Link>
                 <Link to="/api/genero/hombre">Hombre</Link>
-                <Link to="/api/iniciar-sesion">Ingresar</Link>
+                <Link to="/api/login">Ingresar</Link>
             </Nav>
             </Container>
         </Navbar>
