@@ -61,7 +61,7 @@ const CrearCuenta = () =>{
                 <label>Avatar</label>
                 <input type="text"name='photo' value={newUser.photo} onChange={handleChangeUser} required/>
                 <label>Email</label>
-                <input type="email"name='username' value={newUser.username} onChange={handleChangeUser} required/>
+                <input type="email"  name='username' value={newUser.username} onChange={handleChangeUser} required/>
                 <label>Contraseña</label>
                 <input type="password" name='password' value={newUser.password} onChange={handleChangeUser} required/>
                 <button type="submit" className="botones">Registrarme</button>

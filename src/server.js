@@ -68,72 +68,10 @@ app.use(session({
 app.use(passport.initialize())
 app.use(passport.session())
 
-//serializar
-passport.serializeUser((user,done)=>{
-    done(null, user.id)
-})
 
-passport.deserializeUser((id, done)=>{
-    UserModel.findById(id,(error, userFound)=>{
-        if(error) return done(error)
-        return done(null,userFound)
-    })
-})
 
-//crear una funcion para encriptar la contraseñas;
-const createHash = (password)=>{
-    const hash = bcrypt.hashSync(password,bcrypt.genSaltSync(10));
-    return hash;
-}
-//Validar contraseña
-const isValidPassword = (user, password)=>{
-    return bcrypt.compareSync(password, user.password);
-}
 //passport strategy crear usuario
-passport.use('signupStrategy', new LocalStrategy({
-    passReqToCallback:true,
-    usernameField: "email",
-    },
-    (req,username,password,done)=>{
-        logger.info(username);
-        UserModel.findOne({username:username}, (error,userFound)=>{
-            if (error) return done(error,null,{message:'hubo un error'})
-            if(userFound) return done(null,null,{message:'el usuario existe'}) 
-            const newUser = {
-                name: req.body.name,
-                address: req.body.address,
-                age: req.body.age,
-                phone: req.body.phone,
-                photo: req.body.photo,
-                username:username,
-                password:createHash(password)
-            }
-            logger.info(newUser);
-            UserModel.create(newUser, (error,userCreated)=>{
-                if(error) return done(error,null, {message:'error al registrar'})
-                return done(null, userCreated,{message:'usuario creado'})
-            })
-        })
-    }
-))
 
-// passport strategy iniciar sesion
-passport.use('loginStrategy', new LocalStrategy(
-    (username, password, done) => {
-        logger.info(username);
-        UserModel.findOne({ username: username }, (err, user)=> {
-            console.log(user);
-            if (err) return done(err);
-            if (!user) return done(null, false);
-            if (!user.password) return done(null, false);
-            if (!isValidPassword(user,password)){
-                logger.info('existen datos')
-                return done(null,false,{message:'password invalida'})
-            }
-            return done(null, user);
-        });
-    }
-));
 // Rutas de productos
 app.use('/api', rutaProductos)
 
