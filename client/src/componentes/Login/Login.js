@@ -1,8 +1,10 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 import { Link } from "react-router-dom"
 import axios from "axios"
 import './Login.css'
 import { useNavigate } from 'react-router-dom'
+import AlertContext from "../../context/Alert"
+
 
 const Login = () =>{
     const [user, setUser] = useState({
@@ -10,6 +12,7 @@ const Login = () =>{
         password:''
     })
     const navigate = useNavigate()
+    const {setNotification} = useContext(AlertContext)
 
     const send = async(e) => {
         e.preventDefault()
@@ -17,15 +20,17 @@ const Login = () =>{
             await axios.post('http://localhost:3001/api/login', {
                 username: user.username,
                 password: user.password
-                }).then((res)=>{
-                    console.log(res);
+                }).then(response=>{
+                    console.log(response.data);
+                    if(response.data === "inicio"){
+                        return navigate("/api/checkout")
+                    }
                 })
-            navigate("/api")
         } catch(error){
-            console.log(error);
+            console.log(error)
+            return setNotification('danger','El usuario y/o la constraseña son incorrectos');
         }
-        
-    };
+};
 
     const handleChangeLogin = (e) =>{
         setUser({

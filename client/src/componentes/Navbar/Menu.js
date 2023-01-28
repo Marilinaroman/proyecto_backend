@@ -7,7 +7,7 @@ import './Menu.css'
 const Menu = ()=>{
     return (
         <>
-        <Navbar bg="dark" variant="dark">
+        <Navbar variant="dark">
             <Container className='contenedorNavbar'>
             <Navbar.Brand href="/api"> <img src='../img/logo.png' alt='logo' width={155} height={69}/></Navbar.Brand>
             <Nav className="navbar">

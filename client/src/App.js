@@ -5,21 +5,29 @@ import ItemListContainer from './componentes/ItemListContainer/ItemListContainer
 import ItemDetailContainer from './componentes/ItemDetailContainer/ItemDetailContainer'
 import Login from './componentes/Login/Login';
 import CrearCuenta from './componentes/Login/CrearCuenta';
+import { CartContextProvider } from './context/CartContext';
+import { AlertProvider } from './context/Alert';
+import 'bootstrap/dist/css/bootstrap.min.css';
+import CartDetail from './componentes/Cart/Cart';
 
 function App() {
   return (
     <div className="App">
-      <BrowserRouter>
-        <Menu/>
-        <Routes>
-          <Route path='/api' element={<ItemListContainer/>} />
-          <Route path='/api/genero/:genero' element={<ItemListContainer/>}/>
-          <Route path='/api/id/:id' element={<ItemDetailContainer/>}/>
-          <Route path='/api/login' element={<Login/>}/>
-          <Route path='/api/crear-usuario' element={<CrearCuenta/>}/>
-        </Routes>
-      </BrowserRouter>
-      
+      <AlertProvider>
+        <CartContextProvider>
+          <BrowserRouter>
+            <Menu/>
+            <Routes>
+              <Route path='/api' element={<ItemListContainer/>} />
+              <Route path='/api/id/:id' element={<ItemDetailContainer/>}/>
+              <Route path='/api/genero/:genero' element={<ItemListContainer/>}/>
+              <Route path='/api/login' element={<Login/>}/>
+              <Route path='/api/crear-usuario' element={<CrearCuenta/>}/>
+              <Route path='/api/cart' element={<CartDetail/>}/>
+            </Routes>
+          </BrowserRouter>
+        </CartContextProvider>
+      </AlertProvider>
     </div>
   );
 }

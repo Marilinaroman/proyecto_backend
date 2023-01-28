@@ -1,0 +1,24 @@
+.count{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.btnCount{
+    margin: 0 1rem 1rem 1rem;
+    background-color: #00AC7C;
+    color: #fff;
+    border: none;
+    border-radius: 2rem;
+    cursor: pointer;
+    font-weight: 600;
+}
+
+.botones{
+    width: 100%;
+}
+
+input{
+    width: 4rem;
+    text-align: center;
+}

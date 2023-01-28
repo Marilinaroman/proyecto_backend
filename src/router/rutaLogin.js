@@ -97,11 +97,10 @@ rutaLogin.post('/crear-usuario',passport.authenticate('signupStrategy',{
 
 //iniciar sesion
 rutaLogin.post('/login',passport.authenticate('loginStrategy',{
-    failureRedirect: '/inicio-sesion',
     failureMessage:true
 }),
 (req,res)=>{
-    res.send('incio')
+    res.send('inicio')
 })
 
 

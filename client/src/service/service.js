@@ -1,12 +1,16 @@
 import axios from "axios"
 
-export const getAll = async() =>{
-    
+export const getAll = async(genero) =>{
+    let url = ''
+    genero ? url= `http://localhost:3001/api/genero/${genero}` : url= `http://localhost:3001/api`
+
+    console.log(genero);
     let data = await axios({
-        url:`http://localhost:3001/api`,
+        url,
         method:'get'
     }).then( res =>{
-        return res.data.listado
+        console.log(res);
+        return res.data.listado || res.data
     })
     console.log(data);
     return data
@@ -18,23 +22,25 @@ export const getById = async(id) =>{
         url:`http://localhost:3001/api/id/${id}`,
         method:'get'
     }).then( res =>{
-        return res.data
+        return {id,...res.data}
     })
     console.log(data);
     return data
 }
 
-export const sendUser = async(username, password) =>{
+export const getByGenero = async(genero) =>{
     
     let data = await axios({
-        url:`/api/login`,
-        method:'post'
+        url:`http://localhost:3001/api/genero/${genero}`,
+        method:'get'
     }).then( res =>{
         return res.data
     })
     console.log(data);
     return data
 }
+
+
 
 
 

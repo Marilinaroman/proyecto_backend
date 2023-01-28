@@ -31,8 +31,8 @@ const CrearCuenta = () =>{
                 photo:newUser.photo
             }).then((response)=>{
                 console.log(response);
+                    navigate("/api")
             })
-            navigate("/api")
         } catch(error){
             console.log(error);
         }

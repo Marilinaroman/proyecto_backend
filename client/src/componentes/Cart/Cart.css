@@ -1,0 +1,57 @@
+.containerCart{
+    height: 100%;
+}
+
+.cart{
+    width: 100%;
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    
+}
+.cart > h1{
+    width: 100%;
+}
+.cart > Table{
+    width: 80%;
+
+}
+.containerButton{
+    display: flex;
+    justify-content: space-evenly;
+}
+
+.containerButton > button, .containerButton > a{
+    width: auto;
+    margin: 1rem;
+    padding-left: 0.5rem;
+    padding-right: 0.5rem;
+}
+
+.linkProduct, .linkProduct:hover{
+    text-decoration: none;
+    color: black;
+}
+
+.containerButton > a, .containerButton > a:hover{
+    text-decoration: none;
+    text-align: center;
+    display: flex;
+    align-items: center;
+    color: white;
+}
+/*-------Tablet-------*/
+@media only screen and (max-width: 768px){
+    
+}
+/*-------Mobile-------*/
+@media only screen and (max-width:390px){
+    .cart > table{
+        width: 90%
+    }
+    .containerButton{
+        display: grid;
+        justify-content: space-evenly;
+        grid-template-columns: 1fr;
+    }
+}
