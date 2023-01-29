@@ -12,10 +12,24 @@ export const CartContextProvider = ({children}) =>{
         const initialValue = JSON.parse(saved);
         return initialValue || [];
     
-})
+    })
+
+    const [buyer, setBuyer] = useState({
+        name:'',
+        username:'',
+        address:'',
+        avatar:''
+    })
+    
     useEffect(() => {
         localStorage.setItem("cart", JSON.stringify(cart));
     }, [cart]);
+
+    const addBuyer= (datosBuyer)=>{
+        if(datosBuyer){
+            return setBuyer(datosBuyer)
+        }
+    }
 
     const addItem = (productToAdd) =>{
         if(!isInCart(productToAdd.id)) {
@@ -69,11 +83,11 @@ export const CartContextProvider = ({children}) =>{
         return acc + sum.total
     }, 0)
 
-
+    
     
     
     return(
-        <CartContext.Provider value={{cart, addItem, getQuantity,getProductQuantity, isInCart, clearCart, removeItem, total}}>
+        <CartContext.Provider value={{cart,buyer, addItem, getQuantity,getProductQuantity, isInCart, clearCart, removeItem, addBuyer, total}}>
             {children}
         </CartContext.Provider>
     )

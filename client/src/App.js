@@ -9,6 +9,7 @@ import { CartContextProvider } from './context/CartContext';
 import { AlertProvider } from './context/Alert';
 import 'bootstrap/dist/css/bootstrap.min.css';
 import CartDetail from './componentes/Cart/Cart';
+import Checkout from './componentes/Checkout/Checkout';
 
 function App() {
   return (
@@ -24,6 +25,7 @@ function App() {
               <Route path='/api/login' element={<Login/>}/>
               <Route path='/api/crear-usuario' element={<CrearCuenta/>}/>
               <Route path='/api/cart' element={<CartDetail/>}/>
+              <Route path='/api/checkout' element={<Checkout/>}/>
             </Routes>
           </BrowserRouter>
         </CartContextProvider>

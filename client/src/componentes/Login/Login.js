@@ -4,6 +4,7 @@ import axios from "axios"
 import './Login.css'
 import { useNavigate } from 'react-router-dom'
 import AlertContext from "../../context/Alert"
+import CartContext from '../../context/CartContext'
 
 
 const Login = () =>{
@@ -13,6 +14,7 @@ const Login = () =>{
     })
     const navigate = useNavigate()
     const {setNotification} = useContext(AlertContext)
+    const {addBuyer} = useContext(CartContext)
 
     const send = async(e) => {
         e.preventDefault()
@@ -21,8 +23,9 @@ const Login = () =>{
                 username: user.username,
                 password: user.password
                 }).then(response=>{
-                    console.log(response.data);
-                    if(response.data === "inicio"){
+                    console.log(response);
+                    if(response.status === 200){
+                        addBuyer(response.data)
                         return navigate("/api/checkout")
                     }
                 })
@@ -38,8 +41,6 @@ const Login = () =>{
             [e.target.name]:e.target.value
         })
     }
-
-
 
     return(
         <div>

@@ -89,7 +89,7 @@ rutaLogin.get('/registrarse', async(req,res)=>{
 //Crear session
 
 rutaLogin.post('/crear-usuario',passport.authenticate('signupStrategy',{
-    failureRedirect:'/api/registrarse',
+    failureRedirect:'/api/crear-usuario',
     failureMessage:true
 }),(req,res)=>{
     res.send('registrado')
@@ -97,21 +97,13 @@ rutaLogin.post('/crear-usuario',passport.authenticate('signupStrategy',{
 
 //iniciar sesion
 rutaLogin.post('/login',passport.authenticate('loginStrategy',{
-    failureMessage:true
-}),
-(req,res)=>{
-    res.send('inicio')
+    failureMessage:true,
+    failureRedirect: "/api/login",
+}),(req,res)=>{
+    let {id, name, address, phone, avatar} = req.user
+    res.send({id, name, address,phone, avatar})
 })
 
-
-rutaLogin.get('/perfil',async(req,res)=>{
-    if(req.isAuthenticated()){
-        let {name} = req.user
-        res.render('form',{user:name})
-    }else{
-        res.send("<div>Debes <a href='/api/inicio-sesion'>inciar sesion</a> o <a href='/api/registro'>registrarte</a></div>")
-    }
-})
 
 rutaLogin.get('/logout',(req,res)=>{
     req.session.destroy()

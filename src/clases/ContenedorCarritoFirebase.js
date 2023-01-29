@@ -19,7 +19,13 @@ class ContainerCarritofirebase{
             const doc = this.db.doc()
             const timestamp = Date.now()
             const newProd = await doc.create({timestamp})
-            return newProd
+            console.log(newProd);
+            const data = await this.getAll()
+            const nuevo = await data.filter(e => e.timestamp == timestamp)
+            const id = await nuevo.map((snap)=>{
+                return snap.id
+            })
+            return id;
 		} catch (err) {
 			console.log(err);
 		}

@@ -66,7 +66,7 @@ const CrearCuenta = () =>{
                 <input type="password" name='password' value={newUser.password} onChange={handleChangeUser} required/>
                 <button type="submit" className="botones">Registrarme</button>
             </form>
-            <Link to='/api/iniciar-sesion'>Iniciar sesion</Link>
+            <Link to='/api/login'>Iniciar sesion</Link>
         </div>
     )
 }
