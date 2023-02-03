@@ -14,5 +14,6 @@ export const config = {
     ACCOUNT_ID_TWILIO : process.env.ACCOUNT_ID_TWILIO,
     AUTH_TWILIO : process.env.AUTH_TWILIO ,
     SMS_TWILIO : process.env.SMS_TWILIO,
-    WSP_TWILIO : process.env.WSP_TWILIO
+    WSP_TWILIO : process.env.WSP_TWILIO,
+    WSP_ADMIN : process.env.WSP_ADMIN
 };

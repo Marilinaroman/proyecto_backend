@@ -85,7 +85,8 @@ class ContainerCarritofirebase{
     }
     async moreProd(id,modificacion){
         try{
-            await this.putById(id,modificacion)
+            const moreData = await this.putById(id,modificacion)
+            return moreData
         }catch(err){
             console.log(err);
         }

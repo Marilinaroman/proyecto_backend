@@ -1,9 +1,11 @@
 import express from "express"
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
+import {config} from '../config/config.js';
 import  {logger} from '../logger/logger.js'
 import { UserModel } from "../models/users.js";
 import bcrypt from 'bcrypt'
+import { transporterContacto} from "./rutaContacto.js";
 
 const rutaLogin = express.Router()
 
@@ -47,11 +49,31 @@ passport.use('signupStrategy', new LocalStrategy({
                 username:username,
                 password:createHash(password)
             }
+
+            let detalleEmail=`<div>
+                <h1>Se registro un nuevo usuario/a</h1>
+                <div> 
+                    <p>name: ${newUser.name}</p>
+                    <p>address: ${newUser.address}</p>
+                    <p>phone: ${newUser.phone}</p>
+                    <p>email: ${newUser.username}</p>
+                </div>
+                </div>`
+
+
             logger.info(newUser);
+            
             UserModel.create(newUser, (error,userCreated)=>{
                 if(error) return done(error,null, {message:'error al registrar'})
                 return done(null, userCreated,{message:'usuario creado'})
             })
+
+            const response = transporterContacto.sendMail({from:"Servidor de NodeJs",
+            to:config.TEST_EMAIL,
+            subject:'Nuevo registro',
+            html: detalleEmail})
+
+            logger.info(`Aviso enviado`)
         })}catch(error){
             logger.info(error);
         }
@@ -91,9 +113,9 @@ rutaLogin.get('/registrarse', async(req,res)=>{
 rutaLogin.post('/crear-usuario',passport.authenticate('signupStrategy',{
     failureRedirect:'/api/crear-usuario',
     failureMessage:true
-}),(req,res)=>{
+}), async(req,res)=>{
     res.send('registrado')
-})
+});
 
 //iniciar sesion
 rutaLogin.post('/login',passport.authenticate('loginStrategy',{

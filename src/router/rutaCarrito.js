@@ -1,5 +1,9 @@
 import express from 'express'
 import { ContenedorDaoCarrito } from '../daos/index.js'
+import { twilioClient } from './rutaContacto.js'
+import { config } from '../config/config.js'
+
+
 const rutaCarrito = express.Router()
 
 const data = ContenedorDaoCarrito
@@ -47,11 +51,29 @@ rutaCarrito.post('/:id/productos', async(req,res)=>{
         return res.status(404).send({ message: 'Error el carrito no existe' })
     }else{
         const carrito = await data.moreProd(id, modificacion)
-        res.send(carrito)
-        
+        console.log(carrito);
+        if(carrito){
+            twilioClient.messages.create(
+                {
+                    body:`Se registro un nuevo pedido! nombre: ${carrito.name}, pedido:${id}, email:${carrito.username}`,
+                    from:config.WSP_TWILIO,
+                    to:config.WSP_ADMIN
+                },
+                (error)=>{
+                    if(error){
+                        console.error(`Hubo un error al enviar el mensaje de whatsapp al administrador ${error}`)
+                    } else {
+                        console.info(`Mensaje de whatsapp de registro enviado correctamente`)
+                    }
+                }
+            )
+        }else{
+            console.log('error');
+        }
+        res.send('pedido generado')
     }
-    
 })
+
 
 //Elimina un producto del carrito
 rutaCarrito.delete('/:id/productos/:id_prod', async(req,res)=>{
@@ -65,5 +87,7 @@ rutaCarrito.delete('/:id/productos/:id_prod', async(req,res)=>{
         res.send(carrito)
     }
 })
+
+
 
 export default rutaCarrito
