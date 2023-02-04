@@ -1,8 +1,8 @@
 import express from 'express'
 import { ContenedorDaoCarrito } from '../daos/index.js'
-import { twilioClient } from './rutaContacto.js'
+import { twilioClient } from './datosContacto.js'
 import { config } from '../config/config.js'
-
+import { logger, logArchivoError, logArchivoWarn } from '../logger/logger.js';
 
 const rutaCarrito = express.Router()
 
@@ -51,7 +51,7 @@ rutaCarrito.post('/:id/productos', async(req,res)=>{
         return res.status(404).send({ message: 'Error el carrito no existe' })
     }else{
         const carrito = await data.moreProd(id, modificacion)
-        console.log(carrito);
+        logger.info(carrito);
         if(carrito){
             twilioClient.messages.create(
                 {
@@ -61,14 +61,28 @@ rutaCarrito.post('/:id/productos', async(req,res)=>{
                 },
                 (error)=>{
                     if(error){
-                        console.error(`Hubo un error al enviar el mensaje de whatsapp al administrador ${error}`)
+                        logArchivoWarn.warn(`Hubo un error al enviar el mensaje de whatsapp al administrador ${error}`)
                     } else {
-                        console.info(`Mensaje de whatsapp de registro enviado correctamente`)
+                        logger.info(`Mensaje de whatsapp de pedido enviado correctamente`)
+                    }
+                }
+            )
+            twilioClient.messages.create(
+                {
+                    body:`Registramos un nuevo pedido tuyo! pedido:${id}, email:${carrito.username}`,
+                    from:config.WSP_TWILIO,
+                    to:`whatsapp:${carrito.phone}`
+                },
+                (error)=>{
+                    if(error){
+                        logArchivoWarn.warn(`Hubo un error al enviar el mensaje de whatsapp al cliente ${error}`)
+                    } else {
+                        logger.info(`Mensaje de whatsapp de pedido enviado correctamente`)
                     }
                 }
             )
         }else{
-            console.log('error');
+            logArchivoWarn.warn('error');
         }
         res.send('pedido generado')
     }

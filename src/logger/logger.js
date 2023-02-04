@@ -13,6 +13,7 @@ log4js.configure({
     },
     categories:{
         default:{appenders:['consola'], level:'info'},
+        warn:{appenders:['archivoWarn'], level:'warn'},
         error:{appenders:['archivoError'], level:'error'},
     }
 })

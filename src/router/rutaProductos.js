@@ -1,6 +1,7 @@
 import express from "express"
 import {ContainerMongo} from '../clases/ContenedorProductosMongo.js'
 import { ContenedorDaoProductos } from "../daos/index.js"
+import { logger, logArchivoError, logArchivoWarn } from '../logger/logger.js';
 
 const rutaProductos = express.Router()
 
@@ -26,9 +27,9 @@ rutaProductos.get('/', async(req,res)=>{
 //muestra el producto segun su id
 rutaProductos.get('/genero/:genero', async (req,res)=>{
     const {genero} =req.params
-    console.log(genero);
+    logger.info(genero);
     const prod = await data.getByGenero(genero)
-    console.log(prod);
+    logger.info(prod);
     if(prod){
         res.send(prod)
     }else{
@@ -41,7 +42,7 @@ rutaProductos.get('/genero/:genero', async (req,res)=>{
 //muestra el producto segun su id
 rutaProductos.get('/id/:id', async(req,res)=>{
     const {id} =req.params
-    console.log(req.params);
+    logger.info(req.params);
     const prod = await data.getById(id)
     if(prod){
         return res.send(prod)

@@ -1,7 +1,6 @@
 import express from "express";
 import rutaCarrito from "./router/rutaCarrito.js"
 import rutaProductos from "./router/rutaProductos.js";
-//import rutaContacto from "./router/rutaContacto.js";
 import {config} from './config/config.js';
 import mongoose from 'mongoose';
 import { normalize, schema } from "normalizr";
@@ -81,8 +80,6 @@ app.use('/api/carrito',rutaCarrito)
 // Rutas del Login
 app.use('/api',rutaLogin)
 
-//Ruta Contacto
-//app.use('/api',rutaContacto)
 
 app.get('/*', async(req,res)=>{
     logArchivoError.error('ruta inexistente')

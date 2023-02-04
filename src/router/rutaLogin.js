@@ -2,10 +2,10 @@ import express from "express"
 import passport from 'passport'
 import { Strategy as LocalStrategy } from 'passport-local'
 import {config} from '../config/config.js';
-import  {logger} from '../logger/logger.js'
 import { UserModel } from "../models/users.js";
 import bcrypt from 'bcrypt'
-import { transporterContacto} from "./rutaContacto.js";
+import { transporterContacto} from "./datosContacto.js";
+import { logger, logArchivoError, logArchivoWarn } from '../logger/logger.js';
 
 const rutaLogin = express.Router()
 
@@ -86,7 +86,7 @@ passport.use('loginStrategy', new LocalStrategy(
         logger.info(username);
         try{
             UserModel.findOne({ username: username }, (err, user)=> {
-            console.log(user);
+            logger.info(user);
             if (err) return done(err);
             if (!user) return done(null, false);
             if (!user.password) return done(null, false);
@@ -96,14 +96,14 @@ passport.use('loginStrategy', new LocalStrategy(
             }
             return done(null, user);
         })}catch(error){
-            console.log(error);
+            logArchivoWarn.warn(error);
         }
     }
 ));
 
 rutaLogin.get('/registrarse', async(req,res)=>{
     const errorMessage = req.session.messages ? req.session.messages[0] : '';
-    console.log(req.session);
+    logger.info(req.session);
     res.send({error:errorMessage})
     req.session.messages =[]
 })
