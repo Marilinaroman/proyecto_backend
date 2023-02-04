@@ -5,7 +5,7 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start-fork": "node src/server.js",
+    "start": "node src/server.js",
     "reporte-fork": "artillery quick --count 20 -n 50 http://localhost:3001/api?max=100000 > result_fork.txt",
     "reporte-cluster": "artillery quick --count 20 -n 50 http://localhost:3001/api?max=100000 > result_cluster.txt",
     "start-cluster": "node src/server.js -m CLUSTER",
